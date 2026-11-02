@@ -3,7 +3,7 @@ Audits the RAG evaluation dataset for duplicate questions and invalid ground-tru
 Generates a structured audit report containing all detected issues and their corresponding example indices.
 """
 #A ground-truth document ID is the ID of a document that is already known to contain the correct information for a particular evaluation question.
-from collections.abc import AbstractSet, Sequence
+from collections.abc import Set, Sequence
 from dataclasses import dataclass
 
 from rag_benchmark_kit.dataset import EvaluationExample
@@ -38,7 +38,7 @@ def _normalize_query(query: str) -> str:
 
 def audit_dataset(
     examples: Sequence[EvaluationExample],
-    available_doc_ids: AbstractSet[str],
+    available_doc_ids: Set[str],
 ) -> AuditReport:
     """Check duplicate questions and invalid document references."""
 
