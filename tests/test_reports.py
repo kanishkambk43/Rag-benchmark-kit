@@ -2,6 +2,8 @@ import csv
 import io
 import json
 
+import pytest
+
 from rag_benchmark_kit.audit import AuditIssue, AuditReport
 from rag_benchmark_kit.reports import to_csv, to_json
 
@@ -91,3 +93,13 @@ def test_to_csv_handles_valid_report() -> None:
 
     assert len(rows) == 0
     assert result.startswith("code,message,example_index")
+
+
+def test_to_json_rejects_invalid_report() -> None:
+    with pytest.raises(TypeError, match="AuditReport"):
+        to_json("invalid")
+
+
+def test_to_csv_rejects_invalid_report() -> None:
+    with pytest.raises(TypeError, match="AuditReport"):
+        to_csv("invalid")

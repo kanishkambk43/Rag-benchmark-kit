@@ -1,16 +1,13 @@
 [project]
 name = "rag-benchmark-kit"
 version = "0.1.0"
-description = "Add your description here"
+description = "A lightweight toolkit for auditing and benchmarking RAG evaluation datasets."
 readme = "README.md"
 authors = [
     { name = "kanishkambk43", email = "kanishkambk43@gmail.com" }
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.10"
 dependencies = []
-
-[project.scripts]
-rag-benchmark-kit = "rag_benchmark_kit:main"
 
 [build-system]
 requires = ["uv_build>=0.12.19,<0.13.0"]
@@ -21,3 +18,6 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.17.3",
 ]
+
+[tool.ruff.lint]
+ignore = ["PYI025"]

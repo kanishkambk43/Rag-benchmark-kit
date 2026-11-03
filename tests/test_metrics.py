@@ -1,4 +1,3 @@
-
 import pytest
 
 from rag_benchmark_kit.metrics import (
@@ -10,6 +9,7 @@ from rag_benchmark_kit.metrics import (
 # -------------------------
 # Tests for Recall@k
 # -------------------------
+
 
 def test_recall_at_k_all_relevant_documents_found() -> None:
     retrieved = ["doc_1", "doc_2", "doc_3"]
@@ -66,6 +66,7 @@ def test_recall_at_k_rejects_boolean_k() -> None:
 # Tests for Reciprocal Rank
 # -------------------------
 
+
 def test_reciprocal_rank_first_result_is_relevant() -> None:
     result = reciprocal_rank(
         ["doc_1", "doc_2", "doc_3"],
@@ -101,6 +102,7 @@ def test_reciprocal_rank_rejects_empty_relevant_documents() -> None:
 # -------------------------
 # Tests for Mean Reciprocal Rank
 # -------------------------
+
 
 def test_mean_reciprocal_rank() -> None:
     retrieved_results = [
@@ -141,6 +143,7 @@ def test_mean_reciprocal_rank_rejects_mismatched_lengths() -> None:
 # Input validation tests
 # -------------------------
 
+
 def test_recall_at_k_rejects_empty_retrieved_document_id() -> None:
     with pytest.raises(ValueError, match="must not be empty"):
         recall_at_k([""], {"doc_1"}, k=1)
@@ -149,3 +152,39 @@ def test_recall_at_k_rejects_empty_retrieved_document_id() -> None:
 def test_reciprocal_rank_rejects_empty_retrieved_document_id() -> None:
     with pytest.raises(ValueError, match="must not be empty"):
         reciprocal_rank([""], {"doc_1"})
+
+
+def test_rejects_non_string_retrieved_doc_id() -> None:
+    with pytest.raises(TypeError, match="must be a string"):
+        recall_at_k(
+            retrieved_doc_ids=[123],
+            relevant_doc_ids={"doc_1"},
+            k=1,
+        )
+
+
+def test_rejects_non_string_relevant_doc_id() -> None:
+    with pytest.raises(TypeError, match="must be a string"):
+        recall_at_k(
+            retrieved_doc_ids=["doc_1"],
+            relevant_doc_ids={"doc_1", 123},
+            k=1,
+        )
+
+
+def test_rejects_string_as_retrieved_sequence() -> None:
+    with pytest.raises(TypeError, match="must be a sequence"):
+        recall_at_k(
+            retrieved_doc_ids="doc_1",
+            relevant_doc_ids={"doc_1"},
+            k=1,
+        )
+
+
+def test_rejects_non_set_relevant_doc_ids() -> None:
+    with pytest.raises(TypeError, match="must be a set"):
+        recall_at_k(
+            retrieved_doc_ids=["doc_1"],
+            relevant_doc_ids=["doc_1"],
+            k=1,
+        )
