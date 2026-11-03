@@ -3,6 +3,7 @@ name = "rag-benchmark-kit"
 version = "0.1.0"
 description = "A lightweight toolkit for auditing and benchmarking RAG evaluation datasets."
 readme = "README.md"
+license = "MIT"
 authors = [
     { name = "kanishkambk43", email = "kanishkambk43@gmail.com" }
 ]
